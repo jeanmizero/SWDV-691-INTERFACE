@@ -8,20 +8,32 @@
 <!-- Add product detail UI -->
 <div class="row mt-5">
     <div class="col-10 mx-auto col-md-6 my-3">
-        <img src="{% static 'img/product-7.jpg'%}" alt="">
+        <img src="{{product.image.url}}" alt="">
 
     </div>
     <!-- Add description -->
     <div class="col-10 mx-auto col-md-6 my-3">
-        <h1 class="product_title">Dubaku Men's Traditional African Embroidery Shirt (Red)</h1>
+        <h1 class="product_title">{{product.name}}</h1>
         <h5 class="text-info font-italic mb-3">
-            <span class="mr-1">$</span> 59.99
+            <span class="mr-1">$</span> {{product.price}}
         </h5>
         <!-- <p>$59.99</p> -->
         <p class="product_description">Product Description</p>
-        <p class="text-justify product_text">Inspired by traditional African attire, this is an essential top for a cultured gentleman. Wear this traditional shirt for special occasions and pair it with dress pants. For a more casual look pair our multi-purposed shirt with blue jeans
-        </p>
-        <p class="text-justify product_text">Out of Stock</p>
+        <p class="text-justify product_text">{{product.description}}</p>
+        <!-- Check the stock number -->
+        {% if product.stock
+        <=0 %} <!-- -->
+            <p class="text-justify product_text"><b>Out of Stock</b></p>
+            <!--  -->
+            {% else %}
+            <a href="{% url 'add_cart' product_id %}">
+                <button type="button" name="button" class="btn btn-secondary">
+                    Add to Cart
+                </button>
+            </a>
+            <!--  -->
+            {% endif %}
+
     </div>
 </div>
 {% endblock %}
