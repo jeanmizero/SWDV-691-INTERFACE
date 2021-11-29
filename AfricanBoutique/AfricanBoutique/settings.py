@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store',
+    'stripe',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -129,4 +131,8 @@ STATICFILES = [os.path.join(BASE_DIR, 'static')]
 # Add url
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+# Add Stripe payment 
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51K0sDWHAlOpnvcMUPsE39mMKy78xkkRvOQgMVJyrpC9o0b0wZuKjwNj2ykulnJZdnEurhlnG4pDyDSv5oSGx8rtg00g6xacHI2'
+STRIPE_SECRET_KEY = 'sk_test_51K0sDWHAlOpnvcMUo1LT2cHD1J13vOUK4asju0u2PeLaoXDhzOLNwIJgKYLYKYzWBnsHGPxoaeZKIGHX7nnpbWjk00fWicmLCU'
 
+CRISPY_TEMPLATE_PACK ='bootstrap4'
