@@ -32,6 +32,7 @@ SECRET_KEY = '#et*vc##k4riy)!&2+saovk=kx4fftb$xnx3t)g-v6%moyuz(%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# 'secret-depths-78282.herokuapp.com', '127.0.0.1'
 
 
 # Application definition
@@ -95,6 +96,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -135,7 +137,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES = [os.path.join(BASE_DIR, 'static')]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Add url
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
