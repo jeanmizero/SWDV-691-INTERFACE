@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product, Cart, CartItem, Order, OrderItem
+from .models import Category, Product, Cart, CartItem, Order, OrderItem, Review
 from django.core.exceptions import ObjectDoesNotExist
 import stripe
 from django.conf import settings
@@ -9,6 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
+
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 
@@ -98,10 +99,11 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     # Add stripe paymnent api
     stripe.api_key = settings.STRIPE_SECRET_KEY
     stripe_total = int(total * 100)
-    description = 'Z-Store - New Order'
+    description = 'African Boutique - New Order'
     data_key = settings.STRIPE_PUBLISHABLE_KEY
     
     if request.method == 'POST':
+        # print(request.'POST')
         try:
             token = request.POST['stripeToken']
             email = request.POST['stripeEmail']
@@ -160,11 +162,6 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
 
                     # print a message when the order is created
                     print('Order has been created')
-                # try:
-                #     sendEmail(order_details.id)
-                #     print('The order email has been sent')
-                # except IOError as e:
-                #     return e
 
                 return redirect('thanks_page', order_details.id)
             except ObjectDoesNotExist:
@@ -256,3 +253,36 @@ def viewOrder(request, order_id):
         order = Order.objects.get(id=order_id, emailAddress=email)
         order_items = OrderItem.objects.filter(order=order)
     return render(request, 'order_detail.html', {'order': order, 'order_items': order_items})
+
+# Search method
+def search(request):
+    products = Product.objects.filter(name__contains=request.GET['title'])
+    return render(request, 'home.html', {'products': products})
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            from_email = form.cleaned_data.get('from_email')
+            message = form.cleaned_data.get('message')
+            name = form.cleaned_data.get('name')
+
+            message_format = "{0} has sent you a new message:\n\n{1}".format(name, message)
+
+            msg = EmailMessage(
+                subject,
+                message_format,
+                to=[],
+                from_email=from_email
+            )
+
+            msg.send()
+
+            return render(request, 'contact_success.html')
+
+
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})

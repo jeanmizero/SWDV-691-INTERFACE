@@ -1,10 +1,11 @@
-{% extends 'base.html' %}
-<!--  -->
-{% load static %}
-<!--  -->
-{% block title %} Cart {% endblock %}
-<!--  -->
-{% block content %} {% if not cart_items %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} 
+Cart 
+{% endblock %} 
+{% block content %} 
+{% if not cart_items %}
+
 <div class="text-center">
     <br>
     <h1 class="text-center product_title">
@@ -16,7 +17,6 @@
         <a href="{% url 'home' %}">here</a> to continue shopping
     </p>
 </div>
-<!--  -->
 {% else %}
 <div class="text-center">
     <br>
@@ -27,6 +27,7 @@
 
 <!--  -->
 <div class="row mx-auto">
+    <!-- Leff side Table-->
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
         <table class="table cart_table">
             <thead class="cart_thead">
@@ -36,15 +37,14 @@
                     </th>
                 </tr>
             </thead>
-            <!-- For Loop to dispaly -->
+            <!-- For Loop to dispaly cart item -->
             {% for cart_item in cart_items %}
             <tr>
                 <td>
                     <a href="cart_item.product.get_url">
-                        <img src="{{cart_item.product.image.url}}" width="100" height="100" alt="">
+                        <img src="{{cart_item.product.image.url}}" alt="">
                     </a>
                 </td>
-                <!--  -->
                 <td class="text-left">
                     {{cart_item.product.name}}
                     <br> SKU: {{cart_item.product.id}}
@@ -54,23 +54,23 @@
                 <td>
                     ${{cart_item.product.sub_total}}
                 </td>
-                {% if cart_item.quantity
-                < cart_item.product.stock %} <td>
+                {% if cart_item.quantity < cart_item.product.stock %} 
+                <td>
                     &nbsp;<a href="{% url 'add_cart' cart_item.product.id %}"><i class="fas fa-plus-circle cart_icon"></i></a> &nbsp;
                     <a href="{% url 'cart_remove' cart_item.product.id %}"><i class="fas fa-minus-circle cart_icon"></i></a> &nbsp;
                     <a href="{% url 'cart_remove_product' cart_item.product.id %}"><i class="fas fa-trash-alt cart_icon"></i></a>
                     </td>
-                    {% else %}
+                {% else %}
                     <td>
                         &nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}"><i class="fas fa-plus-circle cart_icon"></i></a> &nbsp;
                         <a href="{% url 'cart_remove_product' cart_item.product.id %}"><i class="fas fa-minus-circle cart_icon"></i></a>
                     </td>
-                    {% endif %}
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
     </div>
-
+    <!-- Right Table -->
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
         <table class="table cart_table">
             <thead class="cart_thead">
@@ -96,25 +96,19 @@
         <!-- Checkout -->
         <div class="mx-auto">
             <!-- Add Stripe payment -->
+            <!-- No authentication (default U.S. card): 4242 4242 4242 4242. -->
+            <!-- CVC: Any 3 digits -->
+            <!-- Date: Any Future Date -->
             <form action="" action="" method="POST">
                 {% csrf_token %}
-                <script src="https://checkout.stripe.com/checkout.js"
-                    class = "stripe-button"
-                    data-key = "{{ data_key }}"
-                    data-amount = "{{ stripe_total}}"
-                    data-name= "Z-Store"
-                    data-description="{{ description }}"
-                    data-locale="auto"
-                    data-currency="usd"
-                    data-shipping-address="true"
-                    data-billing-address="true"
-                    data-zip-code ="true">
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ data_key }}" data-amount="{{ stripe_total}}" data-name="Z-Store" data-description="{{ description }}" data-locale="auto" data-currency="usd" data-shipping-address="true"
+                    data-billing-address="true" data-zip-code="true">
                 </script>
             </form>
             <a href="{% url 'home' %}" style="text-decoration: none;">
                 <button type="button" class="btn btn-lg btn-block bg-dark text-white">
-                        Continue Shopping
-                    </button>
+                            Continue Shopping
+                </button>
             </a>
         </div>
     </div>

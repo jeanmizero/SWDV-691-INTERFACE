@@ -6,11 +6,11 @@ urlpatterns = [
     path('', views.home, name ='home'),
     path('category/<slug:category_slug>', views.home, name='products_by_category'),
     # Aboutpage url
-    path('category/<slug:category_slug>/<slug:product_slug>', views.productPage, name ='product_details'),
+    path('category/<slug:category_slug>/<slug:product_slug>', views.productPage, name ='product_detail'),
     # Create cart url
     # cart
     path('cart/add/<int:product_id>', views.add_cart, name='add_cart'),
-    path('cart', views.cart_detail, name ='cart'),
+    path('cart', views.cart_detail, name ='cart_detail'),
     # remove item
     path('cart/remove/<int:product_id>', views.cart_remove, name='cart_remove'),
     # Delete item/cart
@@ -26,6 +26,8 @@ urlpatterns = [
     # View history
     path('order_history/', views.orderHistory, name='order_history'),
     path('order/<int:order_id>', views.viewOrder, name='order_detail'),
-    
-    
+    # Search
+    path('search/', views.search, name='search'),
+    # Contact
+    path('contact/', views.contact, name='contact')
 ]

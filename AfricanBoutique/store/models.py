@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 # Create Category Class Model
@@ -16,7 +17,7 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
         
     # Get category url
-    def get_urls(self):
+    def get_url(self):
         return reverse('products_by_category', args=[self.slug])
         
     
@@ -44,8 +45,8 @@ class Product(models.Model):
         verbose_name = 'product'
         verbose_name_plural = 'products'
         
-    def get_urls(self):
-        return reverse('products_detail', args=[self.category.slug, self.slug])
+    def get_url(self):
+        return reverse('product_detail', args=[self.category.slug, self.slug])
 
     # Display output
     def __str__(self):
@@ -64,7 +65,7 @@ class Cart(models.Model):
     def __str__(self):
         return self.cart_id
     
-#  Create cart item model class
+#  Create cart item model class for single product
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
@@ -120,4 +121,13 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.product  
+
+# Review Model
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.content
 
