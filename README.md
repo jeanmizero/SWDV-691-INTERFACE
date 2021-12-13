@@ -20,3 +20,14 @@ Users can
 * CSS
 * Bootstrap
 * Python
+
+## Installation required
+
+* pip install stripe
+  
+  For Testing payment(https://stripe.com/docs/testing)
+  CARD NUMBER (VISA): 4242 4242 4242 4242.
+  CVC: Any 3 digits
+  DATE: Any future date
+  ADDRESS: Any Address
+  NAME: Any name
