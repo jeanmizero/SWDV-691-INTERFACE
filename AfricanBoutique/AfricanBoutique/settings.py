@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import django_heroku
+import dj_database_url
+from decouple import config
 # from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'AfricanBoutique.urls'
@@ -129,6 +133,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES = [os.path.join(BASE_DIR, 'static')]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Add url
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
@@ -137,3 +143,6 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_51K0sDWHAlOpnvcMUPsE39mMKy78xkkRvOQgMVJyrpC9o0
 STRIPE_SECRET_KEY = 'sk_test_51K0sDWHAlOpnvcMUo1LT2cHD1J13vOUK4asju0u2PeLaoXDhzOLNwIJgKYLYKYzWBnsHGPxoaeZKIGHX7nnpbWjk00fWicmLCU'
 
 CRISPY_TEMPLATE_PACK ='bootstrap4'
+
+
+django_heroku.settings(locals())
